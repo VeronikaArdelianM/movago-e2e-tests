@@ -9,6 +9,8 @@ services:
       context: ./backend
       args:
           GH_TOKEN: ${GH_TOKEN}
+          GMAIL_USER: ${GMAIL_USER}
+          GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
     ports:
       - "3000:3000"
     depends_on:
@@ -16,8 +18,8 @@ services:
     environment:
       MONGODB_URI: mongodb://mongo:27017/movago
       JWT_SECRET: supersecret123
-      GMAIL_USER: ilghvm@gmail.com
-      GMAIL_APP_PASSWORD: rjqk ayvo kxqx ghwz
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
       PORT: 3000
 
   frontend:

@@ -23,13 +23,13 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Create .env file
-        run: |
-          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> .env
-
       - name: Build and start containers
         run: |
           docker compose -f deploy/docker-compose.yml up --build --abort-on-container-exit
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
 
       - name: Upload Playwright report
         if: ${{ always() }}
