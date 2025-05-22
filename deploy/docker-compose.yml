@@ -39,4 +39,9 @@ services:
       - ../:/app
     depends_on:
       - frontend
-    command: ["npx", "playwright", "test"]
+    command: >
+      sh -c "
+        npm ci &&
+        npx playwright install --with-deps &&
+        npx playwright test
+      "
