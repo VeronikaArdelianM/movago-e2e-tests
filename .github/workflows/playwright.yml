@@ -2,9 +2,9 @@ name: Playwright E2E Tests (Docker Compose)
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ master ]
+    branches: [ main, master ]
 
 jobs:
   e2e:
