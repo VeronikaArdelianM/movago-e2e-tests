@@ -2,10 +2,8 @@ import mongoose from "mongoose";
 import Lesson from "./models/Lesson.js";
 import lessonsData from "../data/lessonsData";
 
-const MONGO_URI = "mongodb://localhost:27017/movago";
-
 export async function seedLessons() {
-    mongoose.connect(MONGO_URI)
+    mongoose.connect(process.env.MONGODB_URI)
     .then(async () => {
         console.log("MongoDB connected")
 

@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 import { hash } from "bcrypt";
 import User from "../utils/models/User.js";
-
-const MONGO_URI = "mongodb://localhost:27017/movago";
+import dotenv from "dotenv";
 
 export async function seedAdminUser() {
-  await mongoose.connect(MONGO_URI);
+  await mongoose.connect(process.env.MONGODB_URI);
 
   const existing = await User.findOne({ email: "admin@example.com" });
   if (existing) {

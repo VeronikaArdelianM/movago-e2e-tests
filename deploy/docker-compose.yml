@@ -39,6 +39,9 @@ services:
       - ../:/app
     depends_on:
       - frontend
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/movago
+      CI: true
     command: >
       sh -c "
         npm ci &&
