@@ -1,12 +1,23 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
+import { seedAdminUser } from "../utils/seedAdminUser";
+import { seedLessons } from "../utils/seedLessons";
 
-test('homepage loads', async ({ page }) => {
-  await page.goto('http://frontend:4200');
-  await expect(page.getByText('Вивчайте англійську з MovaGo')).toBeVisible();
-});
+test.describe("Homepage", () => {
+  test.beforeAll(async ({ browser }) => {
+    await seedAdminUser();
+    await seedLessons();
 
-test('login', async ({ page }) => {
-  await page.goto('http://frontend:4200');
-  await page.click('text=Увійти');
-  await expect(page.getByText('Немає акаунту?')).toBeVisible();
+  });
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('homepage loads', async ({ page }) => {
+    await expect(page.getByText('Вивчайте англійську з MovaGo')).toBeVisible();
+  });
+
+  test('login', async ({ page }) => {
+    await page.click('text=Увійти');
+    await expect(page.getByText('Немає акаунту?')).toBeVisible();
+  });
 });
