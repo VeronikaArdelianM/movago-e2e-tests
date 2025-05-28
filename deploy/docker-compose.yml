@@ -1,50 +1,58 @@
+# services:
+#   mongo:
+#     image: mongo:6
+#     ports:
+#       - "27017:27017"
+
+#   backend:
+#     build: 
+#       context: ./backend
+#       args:
+#           GH_TOKEN: ${GH_TOKEN}
+#           GMAIL_USER: ${GMAIL_USER}
+#           GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - mongo
+#     environment:
+#       MONGODB_URI: mongodb://mongo:27017/movago
+#       JWT_SECRET: supersecret123
+#       GMAIL_USER: ${GMAIL_USER}
+#       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+#       PORT: 3000
+
+#   frontend:
+#     build: 
+#       context: ./frontend
+#       args:
+#           GH_TOKEN: ${GH_TOKEN}
+#     ports:
+#       - "4200:4200"
+#     depends_on:
+#       - backend
+
 services:
   mongo:
     image: mongo:6
     ports:
       - "27017:27017"
 
-  backend:
-    build: 
-      context: ./backend
+  movago:
+    build:
+      context: ./app
       args:
-          GH_TOKEN: ${GH_TOKEN}
-          GMAIL_USER: ${GMAIL_USER}
-          GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+        GH_TOKEN: ${GH_TOKEN}
+        GMAIL_USER: ${GMAIL_USER}
+        GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
     ports:
-      - "3000:3000"
-    depends_on:
-      - mongo
+      - "3000:3000" # Backend
+      - "4200:4200" # Frontend
     environment:
       MONGODB_URI: mongodb://mongo:27017/movago
       JWT_SECRET: supersecret123
       GMAIL_USER: ${GMAIL_USER}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
       PORT: 3000
-
-  frontend:
-    build: 
-      context: ./frontend
-      args:
-          GH_TOKEN: ${GH_TOKEN}
-    ports:
-      - "4200:4200"
     depends_on:
-      - backend
-
-  tests:
-    image: mcr.microsoft.com/playwright:v1.52.0-noble
-    working_dir: /app
-    volumes:
-      - ../:/app
-    depends_on:
-      - frontend
-    environment:
-      MONGODB_URI: mongodb://mongo:27017/movago
-      CI: true
-    command: >
-      sh -c "
-        npm ci &&
-        npx playwright install --with-deps &&
-        npx playwright test
-      "
+      - mongo

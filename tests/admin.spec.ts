@@ -1,0 +1,40 @@
+import { test, expect } from '@playwright/test';
+import { seedAdminUser } from "../utils/seedAdminUser";
+import { seedLessons } from "../utils/seedLessons";
+import { seedNewUser } from "../utils/seedNewUser";
+
+test.describe.skip("Admin - User management", () => {
+  test.beforeAll(async ({ }) => {
+    await seedLessons();
+    await seedAdminUser();
+    await seedNewUser();
+
+  });
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('Activate user and update user info', async ({ page }) => {
+    await expect(page.getByText('Вивчайте англійську з MovaGo')).toBeVisible();
+  });
+
+  test('Deactivate user', async ({ page }) => {
+    await page.click('text=Увійти');
+    await expect(page.getByText('Немає акаунту?')).toBeVisible();
+  });
+});
+
+test.describe.skip("Admin - Lessons management", () => {
+  test.beforeAll(async ({ }) => {
+    await seedLessons();
+    await seedAdminUser();
+
+  });
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('Create, update & delete lesson', async ({ page }) => {
+    await expect(page.getByText('Вивчайте англійську з MovaGo')).toBeVisible();
+  });
+});

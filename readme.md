@@ -1,16 +1,15 @@
-todo: write test cases
-
 1. Authentication and Authorization Testing
-    1.1 Login with non-existent user  
-    1.2 Login with existing user
-        1.2.1 Regular user doesn't have access to Admin panel
-    1.3 Login with existing admin
-        1.3.1 Admin has access to Admin panel
+    + 1.1 Login with non-existent user
+    + 1.2 Register new user 
+    + 1.3 Login with existing user
+       + 1.3.1 Regular user doesn't have access to Admin panel
+    + 1.4 Login with existing admin
+        + 1.4.1 Admin has access to Admin panel
 2. User management
     2.1 Admin
-        2.1.1 Admin may deactivate user
-        2.1.2 Admin may activate user
-        2.1.3 Admin may open users profile
+        + 2.1.1 Admin may deactivate user
+        + 2.1.2 Admin may activate user
+        + 2.1.3 Admin may open users profile
         2.1.4 Admin may open their user profile
             2.1.4.1 Admin may update photo, name, email & description
         2.1.5 Admin may update existing lessons
@@ -36,4 +35,3 @@ todo: write test cases
         - streak is updated
         - if the same lesson - lessons count on lessons page is updated
         - if new lesson - lessons count in profile is updated
-    3.5

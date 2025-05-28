@@ -1,59 +1,38 @@
 import mongoose from "mongoose";
 import { hash } from "bcrypt";
-import User from "../utils/models/User.js";
-import dotenv from "dotenv";
+import User from "./models/User.js";
+import { testData } from "../data/testData.js";
 
 export async function seedAdminUser() {
-  await mongoose.connect(process.env.MONGODB_URI);
-
-  const existing = await User.findOne({ email: "admin@example.com" });
-  if (existing) {
-    console.log("⚠️ Admin user already exists. Replacing...");
-    await User.deleteOne({ _id: existing._id });
-  }
-
-  const hashedPassword = await hash("Test123!", 10);
-
-  const now = new Date();
-  const yesterday = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() - 1, // subtract one day
-    0, 0, 0, 0            // midnight UTC
-  ));
-
-  const lessonId = new mongoose.Types.ObjectId("6830845151007140d4cfab3f"); // ensure valid ObjectId
-
-  const adminUser = new User({
-    username: "admin",
-    email: "admin@example.com",
-    password: hashedPassword,
-    role: "admin",
-    status: "active",
-    progress: {
-      completedLessons: [lessonId],
-      xp: 20,
-      level: 1,
-      streakDays: 1,
-      activityCalendar: [
-        {
-          date: yesterday,
-          completed: true
-        }
-      ],
-      lessonCompletionCounts: {
-        [lessonId.toString()]: 1
-      }
-    }
-  });
-
   try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MongoDB connected");
+
+    const existing = await User.findOne({ email: testData.adminUser.email });
+    // Check if an admin user already exists
+    if (existing) {
+      console.log("⚠️ Admin user already exists. Replacing...");
+      await User.deleteOne({ _id: existing._id });
+    }
+
+    const hashedPassword = await hash(testData.adminUser.password, 10);
+
+    const adminUser = new User({
+      username: testData.adminUser.username,
+      email: testData.adminUser.email,
+      password: hashedPassword,
+      role: "admin",
+      status: "active"
+    });
+
     await adminUser.save();
-    console.log("✅ Admin user with 1 completed lesson seeded.");
-  } catch (err) {
-    console.error("❌ Failed to seed admin user:", err);
+    console.log("✅ Admin user seeded.");
+  } catch (error) {
+    console.error("❌ Failed to seed admin user:", error);
   } finally {
     await mongoose.disconnect();
+    console.log("MongoDB disconnected");
   }
 }
+
 
