@@ -48,11 +48,23 @@ jobs:
           cd app/movago-be
           npm run build
           npm start
+        env:
+          MONGODB_URI: mongodb://localhost:27017/movago
+          JWT_SECRET: supersecret123
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          PORT: 3000
 
       - name: Start frontend
         run: |
           cd app/movago-fe
           ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+        env:
+          MONGODB_URI: mongodb://localhost:27017/movago
+          JWT_SECRET: supersecret123
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          PORT: 3000          
 
       - name: Wait for app to be ready
         run: npx wait-on http://localhost:4200
