@@ -46,6 +46,7 @@ jobs:
       - name: Start backend
         run: |
           cd app/movago-be
+          npm build
           npm start
 
       - name: Start frontend
@@ -58,7 +59,7 @@ jobs:
       
       - name: Install root dependencies (for Playwright tests)
         run: npm ci
-        
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
