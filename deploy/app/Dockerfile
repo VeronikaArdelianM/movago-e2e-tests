@@ -28,6 +28,6 @@ EXPOSE 3000
 
 # Start backend and frontend in parallel
 CMD concurrently \
-  "cd /app/movago-be && npm start" \
+  "cd /app/movago-be && npm run build && npm start" \
   "cd /app/movago-fe && ng serve --host 0.0.0.0 --port 4200 --disable-host-check"
   # "cd /app/movago-fe && npm start --disable-host-check"
