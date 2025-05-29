@@ -22,6 +22,7 @@ RUN npm run build --prefix /app/movago-fe
 WORKDIR /app
 
 # Expose both frontend (4200) and backend (3000)
+ENV NODE_ENV=production
 EXPOSE 4200
 EXPOSE 3000
 
@@ -29,3 +30,4 @@ EXPOSE 3000
 CMD concurrently \
   "cd /app/movago-be && npm start" \
   "cd /app/movago-fe && ng serve --host 0.0.0.0 --port 4200 --disable-host-check"
+  # "cd /app/movago-fe && npm start --disable-host-check"
