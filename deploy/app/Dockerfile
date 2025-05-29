@@ -8,7 +8,8 @@ WORKDIR /app
 
 # Clone your monorepo
 ARG GH_TOKEN
-RUN git clone https://$GH_TOKEN@github.com/N1KITA2104/course-project .
+RUN git clone https://$GH_TOKEN@github.com/N1KITA2104/course-project . && \
+    echo "Cache bust: $(date +%s)" > /app/cachebust.txt
 # Install backend dependencies
 WORKDIR /app/movago-be
 RUN npm install
@@ -22,7 +23,6 @@ RUN npm run build --prefix /app/movago-fe
 WORKDIR /app
 
 # Expose both frontend (4200) and backend (3000)
-ENV NODE_ENV=production
 EXPOSE 4200
 EXPOSE 3000
 
