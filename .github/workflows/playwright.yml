@@ -57,12 +57,12 @@ jobs:
       - name: Start backend
         run: |
           cd app/movago-be
-          nohup npm start &
+          npm start
 
       - name: Start frontend
         run: |
           cd app/movago-fe
-          nohup npx serve -s dist -l 4200 &
+          ng serve --host 0.0.0.0 --port 4200 --disable-host-check
 
       - name: Wait for app to be ready
         run: npx wait-on http://localhost:4200
