@@ -19,7 +19,7 @@ test.describe("Authentication and Authorization", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     if (process.env.CI) {
-      await page.route('localhost:3000/**', async (route, request) => {
+      await page.route('http://localhost:3000/**', async (route, request) => {
         const newUrl = request.url().replace('localhost:3000', 'movago:3000');
         await route.continue({ url: newUrl });
       });
