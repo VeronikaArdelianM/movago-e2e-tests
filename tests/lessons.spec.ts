@@ -1,13 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { seedAdminUser } from "../utils/seedAdminUser";
-import { seedLessons } from "../utils/seedLessons";
 
 test.describe.skip("Lessons", () => {
-  test.beforeAll(async ({ }) => {
-    await seedLessons();
-    await seedAdminUser();
-
-  });
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });

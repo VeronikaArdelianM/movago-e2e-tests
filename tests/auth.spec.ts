@@ -1,21 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { seedAdminUser } from "../utils/seedAdminUser";
-import { seedLessons } from "../utils/seedLessons";
 import { LoginPage } from '../pageObjects/login';
 import { SignupPage } from '../pageObjects/signup';
 import { testData } from '../data/testData';
-import { seedNewUser } from '../utils/seedNewUser';
 
 let loginPage: LoginPage;
 let signupPage: SignupPage;
 
 test.describe("Authentication and Authorization", () => {
-  test.beforeAll(async ({}) => {
-    await seedLessons();
-    await seedAdminUser();
-    await seedNewUser();
-
-  });
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     if (process.env.CI) {
