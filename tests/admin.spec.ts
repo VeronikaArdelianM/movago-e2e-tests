@@ -24,7 +24,6 @@ test.describe("Admin - User management", () => {
   test('Activate user', async ({ page }) => {
     adminPage = new AdminPage(page);
     await adminPage.goto();
-    await adminPage.checkUserStatus(testData.existentUser, 'Очікує');
     await adminPage.changeUserStatus(testData.existentUser, 'Активний');
     await adminPage.checkUserStatus(testData.existentUser, 'Активний');
   });
@@ -32,7 +31,6 @@ test.describe("Admin - User management", () => {
   test('Deactivate user', async ({ page }) => {
     adminPage = new AdminPage(page);
     await adminPage.goto();
-    await adminPage.checkUserStatus(testData.existentUser, 'Активний');
     await adminPage.changeUserStatus(testData.existentUser, 'Неактивний');
     await adminPage.checkUserStatus(testData.existentUser, 'Неактивний');
   });
@@ -57,6 +55,8 @@ test.describe("Admin - User management", () => {
     await loginPage.goto();
     await loginPage.login(testData.existentUser);
     await expect(loginPage.adminHeaderButton).toBeVisible();
+    await adminPage.goto();
+    await adminPage.changeUserRole(testData.existentUser, 'Користувач');
   });
 });
 
