@@ -1,37 +1,3 @@
-# services:
-#   mongo:
-#     image: mongo:6
-#     ports:
-#       - "27017:27017"
-
-#   backend:
-#     build: 
-#       context: ./backend
-#       args:
-#           GH_TOKEN: ${GH_TOKEN}
-#           GMAIL_USER: ${GMAIL_USER}
-#           GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
-#     ports:
-#       - "3000:3000"
-#     depends_on:
-#       - mongo
-#     environment:
-#       MONGODB_URI: mongodb://mongo:27017/movago
-#       JWT_SECRET: supersecret123
-#       GMAIL_USER: ${GMAIL_USER}
-#       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
-#       PORT: 3000
-
-#   frontend:
-#     build: 
-#       context: ./frontend
-#       args:
-#           GH_TOKEN: ${GH_TOKEN}
-#     ports:
-#       - "4200:4200"
-#     depends_on:
-#       - backend
-
 services:
   mongo:
     image: mongo:6
@@ -73,5 +39,6 @@ services:
       sh -c "
         npm ci &&
         npx playwright install --with-deps &&
+        npx wait-on http://movago:4200 &&
         npx playwright test
       "
