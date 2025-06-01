@@ -67,13 +67,13 @@ test.describe("Lessons", () => {
     await lessonPage.page.getByText('fifteen').click();
     await lessonPage.page.getByText('30').click();
     await lessonPage.page.getByText('thirty').click();
-    await expect(lessonPage.page.getByText('✓Правильно!')).toBeVisible();
+    await expect(lessonPage.page.locator('.feedback.correct-feedback')).toBeVisible();
     await lessonPage.page.getByRole('button', { name: 'Продовжити' }).click();
     await lessonPage.page.getByRole('button', { name: 'There are seven days in a week' }).click();
-    await expect(lessonPage.page.getByText('✓Правильно!')).toBeVisible();
+    await expect(lessonPage.page.locator('.feedback.correct-feedback')).toBeVisible();
     await lessonPage.page.getByRole('button', { name: 'Продовжити' }).click();
     await lessonPage.page.getByRole('button', { name: 'one hundred' }).click();
-    await expect(lessonPage.page.getByText('✓Правильно!')).toBeVisible();
+    await expect(lessonPage.page.locator('.feedback.correct-feedback')).toBeVisible();
     await lessonPage.page.getByRole('button', { name: 'Завершити урок' }).click();
     await expect(lessonPage.page.getByRole('heading', { name: 'Урок завершено!' })).toBeVisible();
     await expect(lessonPage.page.getByText('Правильних відповідей4 /')).toBeVisible();
