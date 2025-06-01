@@ -9,6 +9,7 @@ export class BasePage {
     readonly lessonsHeaderButton: Locator;
     readonly profileHeaderButton: Locator;
     readonly adminHeaderButton: Locator;
+    readonly logoutHeaderButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -18,5 +19,6 @@ export class BasePage {
         this.lessonsHeaderButton = this.header.locator('a[href="/lessons"]');
         this.profileHeaderButton = this.header.locator('a[href="/profile"]');
         this.adminHeaderButton = this.header.locator('a[href="/admin"]');
+        this.logoutHeaderButton = this.header.getByRole('button', { name: 'logout Вийти' });
     }
 }

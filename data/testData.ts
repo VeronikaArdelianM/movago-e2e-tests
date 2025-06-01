@@ -30,5 +30,10 @@ export const testData = {
         "Regular User",
         "user@example.com",
         "Test123!"
+    ),
+    userToDelete: new UserData(
+        "User to Delete",
+        "userToDelete@example.com",
+        "Test123!"
     )
 };

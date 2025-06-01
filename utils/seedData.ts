@@ -59,20 +59,25 @@ export async function seedAdminUser() {
   }
 }
 
-export async function seedNewUser() {
+export async function seedUsers() {
   try {
     await mongoose.connect(URI);
     console.log("MongoDB connected");
     // Check if the user already exists
     const existing = await User.findOne({ email: testData.existentUser.email });
     const existing2 = await User.findOne({ email: testData.newUser.email });
+    const existing3 = await User.findOne({ email: testData.userToDelete.email });
     if (existing) {
       console.log("⚠️ Regular user already exists. Replacing...");
       await User.deleteOne({ _id: existing._id });
     }
     if (existing2) {
-      console.log("⚠️ Second regular user already exists. Deleting...");
+      console.log("⚠️ New user already exists. Deleting...");
       await User.deleteOne({ _id: existing2._id });
+    }
+    if (existing3) {
+      console.log("⚠️ UserToDelete already exists. Replacing...");
+      await User.deleteOne({ _id: existing3._id });
     }
 
     const hashedPassword = await bcrypt.hash(testData.existentUser.password, 10);
@@ -114,10 +119,20 @@ export async function seedNewUser() {
       }
     });
 
+    const userToDelete = new User({
+      username: testData.userToDelete.username,
+      email: testData.userToDelete.email,
+      password: hashedPassword,
+      role: "user",
+      status: "pending"
+    });
+
+    await userToDelete.save();
+    console.log("✅ User to delete seeded.");
     await regularUser.save();
     console.log("✅ Regular user with 1 completed lesson seeded.");
   } catch (error) {
-    console.error("❌ Failed to seed regular user:", error);
+    console.error("❌ Failed to seed users:", error);
   } finally {
     await mongoose.disconnect();
     console.log("MongoDB disconnected");

@@ -15,6 +15,7 @@ test.describe("Authentication and Authorization", () => {
         await route.continue({ url: newUrl });
       });
     }
+    await page.getByRole('button', { name: 'check_circle Прийняти всі' }).click();
   });
 
   test('Login validation', async ({ page }) => {
