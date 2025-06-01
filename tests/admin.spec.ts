@@ -55,8 +55,6 @@ test.describe("Admin - User management", () => {
     await loginPage.goto();
     await loginPage.login(testData.existentUser);
     await expect(loginPage.adminHeaderButton).toBeVisible();
-    await adminPage.goto();
-    await adminPage.changeUserRole(testData.existentUser, 'Користувач');
   });
 });
 

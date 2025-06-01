@@ -2,12 +2,14 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pageObjects/login';
 import { SignupPage } from '../pageObjects/signup';
 import { testData } from '../data/testData';
+import { seedUsers } from '../utils/seedData';
 
 let loginPage: LoginPage;
 let signupPage: SignupPage;
 
 test.describe("Authentication and Authorization", () => {
   test.beforeEach(async ({ page }) => {
+    await seedUsers();
     await page.goto('/');
     if (process.env.CI) {
       await page.route('http://localhost:3000/**', async (route, request) => {
